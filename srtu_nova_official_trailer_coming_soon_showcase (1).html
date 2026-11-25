@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRTU Nova — Plateforme Éducative Intelligente | Coming Soon</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans, Inter, Cairo (Arabic), JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Cairo', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'Cairo', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        novaBg: '#0c0e12',
+                        novaSurface: '#161a1f',
+                        novaSurfaceHover: '#1c2128',
+                        novaBorder: '#242a32',
+                        novaEmerald: '#10b981',
+                        novaEmeraldBright: '#22c55e',
+                        novaEmeraldDark: '#064e3b',
+                        novaAmber: '#f59e0b',
+                        novaCyan: '#06b6d4',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-6px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0c0e12;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        /* Signature SRTU Nova Surface & Border System */
+        .nova-card {
+            background-color: #161a1f;
+            border: 1px solid #242a32;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .nova-card:hover {
+            border-color: rgba(16, 185, 129, 0.45);
+            box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6), 0 0 24px -4px rgba(16, 185, 129, 0.12);
+        }
+
+        .nova-glass-header {
+            background: rgba(12, 14, 18, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid #242a32;
+        }
+
+        /* Active Sidebar Pill matching screenshot */
+        .sidebar-pill-active {
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.22) 0%, rgba(16, 185, 129, 0.08) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            color: #34d399;
+        }
+
+        /* Subtle Emerald Radial Glows */
+        .ambient-emerald-top {
+            background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.14) 0%, rgba(12, 14, 18, 0) 65%);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0c0e12;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #242a32;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #10b981;
+        }
+
+        [dir="rtl"] {
+            font-family: 'Cairo', 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-novaEmerald selection:text-novaBg relative min-h-screen flex flex-col">
+
+    <!-- Interactive Dark Geometric Grid & Emerald Particle Canvas Background -->
+    <canvas id="nova-bg-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0"></canvas>
+
+    <!-- Top Radial Emerald Lighting -->
+    <div class="fixed inset-0 ambient-emerald-top pointer-events-none z-0"></div>
+
+    <!-- Top Navigation Bar (Matches SRTU Nova App Header) -->
+    <header class="sticky top-0 z-50 w-full nova-glass-header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-4">
+            
+            <!-- Left: Hexagonal Emerald Brand Emblem + SRTU Nova -->
+            <a href="#" class="flex items-center gap-3 group shrink-0">
+                <div class="relative w-10 h-10 rounded-xl bg-novaEmerald/10 border border-novaEmerald/40 flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.2)] group-hover:border-novaEmerald transition-all">
+                    <!-- Signature Hexagonal Node SVG Logo -->
+                    <svg class="w-6 h-6 text-novaEmerald" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L20.66 7V17L12 22L3.34 17V7L12 2Z" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="12" cy="12" r="3" fill="#10b981" fill-opacity="0.25" stroke="#10b981"/>
+                        <path d="M12 2V9M20.66 17L14.6 13.5M3.34 17L9.4 13.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <div class="flex items-center gap-2">
+                        <span class="font-display font-extrabold text-lg sm:text-xl tracking-tight text-white">
+                            SRTU <span class="text-novaEmerald">Nova</span>
+                        </span>
+                        <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase tracking-wider bg-novaEmerald/15 text-novaEmerald border border-novaEmerald/30">
+                            TRAILER
+                        </span>
+                    </div>
+                    <span class="text-[11px] font-mono text-slate-400 hidden md:block" data-i18n="brandSub">
+                        Smart Academic Ecosystem • 1BAC & 2BAC
+                    </span>
+                </div>
+            </a>
+
+            <!-- Center Quick Anchor Links (Desktop) -->
+            <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-400">
+                <a href="#interactive-preview" class="hover:text-novaEmerald transition-colors" data-i18n="navPreview">Aperçu</a>
+                <a href="#ecosystem" class="hover:text-novaEmerald transition-colors" data-i18n="navFeatures">Fonctionnalités</a>
+                <a href="#roadmap" class="hover:text-novaEmerald transition-colors" data-i18n="navArchitecture">Architecture</a>
+            </nav>
+
+            <!-- Right: Launch Date Pill + FR | AR | EN Language Switcher -->
+            <div class="flex items-center gap-3 sm:gap-4">
+                <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-novaSurface border border-novaBorder text-xs font-mono text-slate-300">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-novaEmerald opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-novaEmerald"></span>
+                    </span>
+                    <span data-i18n="statusBadge">25 DÉCEMBRE 2026</span>
+                </div>
+
+                <!-- Language Switcher FR | AR | EN -->
+                <div class="flex items-center p-1 rounded-lg bg-novaSurface border border-novaBorder" role="group" aria-label="Language Switcher">
+                    <button onclick="setLanguage('fr')" id="btn-lang-fr" class="lang-btn px-2.5 py-1 rounded-md text-xs font-mono font-bold transition-all bg-novaEmerald text-novaBg cursor-pointer">
+                        FR
+                    </button>
+                    <button onclick="setLanguage('ar')" id="btn-lang-ar" class="lang-btn px-2.5 py-1 rounded-md text-xs font-arabic font-bold transition-all text-slate-400 hover:text-white cursor-pointer">
+                        AR
+                    </button>
+                    <button onclick="setLanguage('en')" id="btn-lang-en" class="lang-btn px-2.5 py-1 rounded-md text-xs font-mono font-bold transition-all text-slate-400 hover:text-white cursor-pointer">
+                        EN
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative z-10 flex-grow">
+
+        <!-- HERO SECTION -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16 sm:pt-20 sm:pb-20 text-center">
+            
+            <!-- Top Eyebrow Pill -->
+            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-novaSurface border border-novaEmerald/30 mb-6 animate-float shadow-[0_0_25px_rgba(16,185,129,0.12)]">
+                <span class="w-2 h-2 rounded-full bg-novaEmerald"></span>
+                <span class="text-xs font-mono uppercase tracking-wider text-emerald-300" data-i18n="heroEyebrow">
+                    🇲🇦 CONÇU POUR LES LYCÉENS & BACHELIERS MAROCAINS (1BAC / 2BAC)
+                </span>
+            </div>
+
+            <!-- Main Display Headline -->
+            <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-[1.15] mb-5">
+                <span data-i18n="heroTitleMain">Votre Assistant Académique Intelligent</span>
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-novaEmerald via-emerald-300 to-novaCyan mt-1" data-i18n="heroTitleAccent">
+                    & Espace Compétitif Tout-en-Un
+                </span>
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="text-sm sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed mb-10" data-i18n="heroSubtitle">
+                Bien plus qu'une simple bibliothèque de cours. SRTU Nova analyse vos compétences par axe et chapitre, génère des quiz corrigés par IA, suit votre Score Cognitif et anime vos tournois d'Échecs & Dames.
+            </p>
+
+            <!-- Hero Action Buttons (NO Waitlist Form) -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 mb-14">
+                <a href="#interactive-preview" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-novaEmerald hover:bg-novaEmeraldBright text-novaBg font-bold text-sm sm:text-base transition-all shadow-[0_0_25px_rgba(16,185,129,0.3)] hover:scale-[1.02]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span data-i18n="ctaExplore">Explorer l'Interface en Direct</span>
+                </a>
+                <a href="#ecosystem" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-novaSurface hover:bg-novaSurfaceHover border border-novaBorder hover:border-novaEmerald/40 text-slate-200 font-semibold text-sm sm:text-base transition-all">
+                    <span data-i18n="ctaArchitecture">Découvrir les Fonctionnalités</span>
+                    <svg class="w-4 h-4 text-novaEmerald" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </a>
+            </div>
+
+            <!-- 30-Day Launch Countdown Bar (Nov 25, 2026 -> Dec 25, 2026) -->
+            <div class="max-w-2xl mx-auto">
+                <div class="flex items-center justify-center gap-2 text-xs font-mono uppercase tracking-[0.2em] text-slate-400 mb-3">
+                    <span class="w-8 h-[1px] bg-novaBorder"></span>
+                    <span data-i18n="countdownTitle">OUVERTURE OFFICIELLE DANS (30 JOURS)</span>
+                    <span class="w-8 h-[1px] bg-novaBorder"></span>
+                </div>
+                <div class="grid grid-cols-4 gap-2.5 sm:gap-4" dir="ltr">
+                    <div class="nova-card rounded-2xl p-3 sm:p-4 relative overflow-hidden">
+                        <div class="absolute inset-x-0 top-0 h-[2px] bg-novaEmerald/70"></div>
+                        <span id="cd-days" class="block font-mono text-2xl sm:text-3xl font-bold text-white">30</span>
+                        <span class="text-[10px] sm:text-xs font-mono text-slate-400 uppercase mt-1 block" data-i18n="cdDays">JOURS</span>
+                    </div>
+                    <div class="nova-card rounded-2xl p-3 sm:p-4 relative overflow-hidden">
+                        <div class="absolute inset-x-0 top-0 h-[2px] bg-novaEmerald/50"></div>
+                        <span id="cd-hours" class="block font-mono text-2xl sm:text-3xl font-bold text-white">00</span>
+                        <span class="text-[10px] sm:text-xs font-mono text-slate-400 uppercase mt-1 block" data-i18n="cdHours">HEURES</span>
+                    </div>
+                    <div class="nova-card rounded-2xl p-3 sm:p-4 relative overflow-hidden">
+                        <div class="absolute inset-x-0 top-0 h-[2px] bg-novaEmerald/50"></div>
+                        <span id="cd-minutes" class="block font-mono text-2xl sm:text-3xl font-bold text-white">00</span>
+                        <span class="text-[10px] sm:text-xs font-mono text-slate-400 uppercase mt-1 block" data-i18n="cdMinutes">MINS</span>
+                    </div>
+                    <div class="nova-card rounded-2xl p-3 sm:p-4 relative overflow-hidden border-novaEmerald/40">
+                        <div class="absolute inset-x-0 top-0 h-[2px] bg-novaEmerald"></div>
+                        <span id="cd-seconds" class="block font-mono text-2xl sm:text-3xl font-bold text-novaEmerald">00</span>
+                        <span class="text-[10px] sm:text-xs font-mono text-slate-400 uppercase mt-1 block" data-i18n="cdSeconds">SECS</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: INTERACTIVE REAL WORKSPACE SHOWCASE -->
+        <section id="interactive-preview" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="text-xs font-mono uppercase tracking-widest text-novaEmerald block mb-2" data-i18n="previewEyebrow">
+                    APERÇU INTERACTIF DU WORKSPACE
+                </span>
+                <h2 class="font-display text-2xl sm:text-4xl font-bold text-white mb-3" data-i18n="previewTitle">
+                    Testez l'Environnement SRTU Nova
+                </h2>
+                <p class="text-sm sm:text-base text-slate-400" data-i18n="previewDesc">
+                    Cliquez sur les onglets de la barre latérale ci-dessous pour explorer le Tableau de bord, le moteur de Quiz & Compétences, l'AI Studio (TVI) et le classement Échecs & Dames ELO.
+                </p>
+            </div>
+
+            <!-- Realistic Browser / App Window Frame -->
+            <div class="rounded-3xl bg-[#0e1116] border border-novaBorder shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85)] overflow-hidden">
+                
+                <!-- Top Window Chrome Bar -->
+                <div class="px-4 py-3 bg-[#13171d] border-b border-novaBorder flex items-center justify-between gap-4" dir="ltr">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
+                        <span class="w-3 h-3 rounded-full bg-amber-500/80"></span>
+                        <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+                    </div>
+                    <div class="flex items-center gap-2 px-3 py-1 rounded-lg bg-novaBg border border-novaBorder text-xs font-mono text-slate-400 max-w-xs sm:max-w-md w-full justify-center truncate">
+                        <svg class="w-3.5 h-3.5 text-novaEmerald shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                        <span id="mock-url">srtunova.ma/dashboard</span>
+                    </div>
+                    <div class="text-[11px] font-mono text-novaEmerald hidden sm:block">
+                        ● INTERACTIVE DEMO
+                    </div>
+                </div>
+
+                <!-- App Workspace Layout: Sidebar + Dynamic Main View -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[540px]">
+                    
+                    <!-- Left Navigation Sidebar (NO Live Rooms anywhere) -->
+                    <aside class="lg:col-span-3 bg-[#111419] border-b lg:border-b-0 lg:border-r border-novaBorder p-4 flex flex-col justify-between" dir="ltr">
+                        <div>
+                            <!-- Sidebar Brand -->
+                            <div class="flex items-center gap-2.5 px-2 pb-4 mb-4 border-b border-novaBorder/70">
+                                <div class="w-7 h-7 rounded-lg bg-novaEmerald/15 border border-novaEmerald/40 flex items-center justify-center text-novaEmerald font-bold text-xs">
+                                    S
+                                </div>
+                                <span class="font-display font-bold text-sm text-white">SRTU Nova</span>
+                                <span class="ml-auto text-[10px] font-mono px-1.5 py-0.5 rounded bg-novaSurface text-slate-400 border border-novaBorder">2BAC PC</span>
+                            </div>
+
+                            <!-- Interactive Sidebar Navigation Tabs -->
+                            <div class="flex lg:flex-col gap-1.5 overflow-x-auto pb-2 lg:pb-0">
+                                <button onclick="switchWorkspaceTab('dashboard')" id="tab-btn-dashboard" class="ws-tab-btn sidebar-pill-active flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap cursor-pointer">
+                                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                                    <span>Tableau de bord</span>
+                                </button>
+
+                                <button onclick="switchWorkspaceTab('quiz')" id="tab-btn-quiz" class="ws-tab-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-slate-400 hover:text-white hover:bg-novaSurface transition-all whitespace-nowrap cursor-pointer">
+                                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    <span>Quiz & Compétences</span>
+                                </button>
+
+                                <button onclick="switchWorkspaceTab('aistudio')" id="tab-btn-aistudio" class="ws-tab-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-slate-400 hover:text-white hover:bg-novaSurface transition-all whitespace-nowrap cursor-pointer">
+                                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                    <span>AI Studio</span>
+                                </button>
+
+                                <button onclick="switchWorkspaceTab('arena')" id="tab-btn-arena" class="ws-tab-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-slate-400 hover:text-white hover:bg-novaSurface transition-all whitespace-nowrap cursor-pointer">
+                                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                                    <span>Échecs & Dames</span>
+                                </button>
+                            </div>
+
+                            <!-- Additional App Sections -->
+                            <div class="hidden lg:block mt-4 pt-4 border-t border-novaBorder/60 space-y-1 text-xs text-slate-500">
+                                <div class="flex items-center justify-between px-3.5 py-2 rounded-lg">
+                                    <span class="flex items-center gap-2.5">📚 Bibliothèque PDF</span>
+                                    <span class="text-[10px] font-mono bg-novaSurface px-1.5 py-0.5 rounded border border-novaBorder">1BAC/2BAC</span>
+                                </div>
+                                <div class="flex items-center justify-between px-3.5 py-2 rounded-lg">
+                                    <span class="flex items-center gap-2.5">💬 Chat & DMs</span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-novaEmerald"></span>
+                                </div>
+                                <div class="flex items-center justify-between px-3.5 py-2 rounded-lg">
+                                    <span class="flex items-center gap-2.5">👥 Amis & Communauté</span>
+                                </div>
+                                <div class="flex items-center justify-between px-3.5 py-2 rounded-lg">
+                                    <span class="flex items-center gap-2.5">🏆 Tournois</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Student Profile Mini-Card -->
+                        <div class="hidden lg:flex items-center gap-3 p-2.5 rounded-xl bg-novaSurface border border-novaBorder mt-4">
+                            <div class="w-8 h-8 rounded-full bg-novaEmerald/20 border border-novaEmerald/40 flex items-center justify-center text-novaEmerald font-bold text-xs">
+                                A
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-xs font-bold text-white truncate">abdo • @abdo_2bac</p>
+                                <p class="text-[10px] font-mono text-slate-400">Niv. 1 • 508 Cognitive</p>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <!-- Right Dynamic Workspace Content Area -->
+                    <div class="lg:col-span-9 p-5 sm:p-8 bg-novaBg/95 flex flex-col justify-between" dir="ltr">
+                        
+                        <!-- VIEW 1: TABLEAU DE BORD -->
+                        <div id="ws-view-dashboard" class="ws-view space-y-5">
+                            <!-- Breadcrumb & Welcome Banner -->
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-novaBorder">
+                                <div>
+                                    <span class="text-[11px] font-mono text-novaEmerald uppercase tracking-wider">2BAC · Sciences Physiques</span>
+                                    <h3 class="font-display text-xl sm:text-2xl font-bold text-white mt-0.5">Welcome back, abdo</h3>
+                                    <p class="text-xs text-slate-400 mt-0.5">Objectif quotidien : 45 min • Progression suivie par compétence</p>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1.5 rounded-lg bg-novaEmerald text-novaBg font-bold text-xs">Académie</span>
+                                    <span class="px-3 py-1.5 rounded-lg bg-novaSurface border border-novaBorder text-slate-300 font-semibold text-xs">Mes Rapports</span>
+                                    <span class="px-3 py-1.5 rounded-lg bg-novaSurface border border-novaBorder text-slate-300 font-semibold text-xs">AI Studio</span>
+                                </div>
+                            </div>
+
+                            <!-- 4 Metric Cards Row -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3.5">
+                                <!-- Card 1: Level & XP -->
+                                <div class="nova-card rounded-2xl p-4">
+                                    <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
+                                        <span>Level & XP</span>
+                                        <span class="text-novaCyan">⚡</span>
+                                    </div>
+                                    <div class="font-display text-xl font-bold text-white">Niv. 1 • 0 XP</div>
+                                    <div class="w-full h-1.5 bg-novaBg rounded-full mt-3 overflow-hidden">
+                                        <div class="h-full bg-novaCyan w-1/4 rounded-full"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 2: SRTU Cognitive Score -->
+                                <div class="nova-card rounded-2xl p-4">
+                                    <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
+                                        <span>SRTU Cognitive Score</span>
+                                        <span class="text-novaAmber">🧠</span>
+                                    </div>
+                                    <div class="font-mono text-2xl font-bold text-novaAmber">508</div>
+                                    <p class="text-[11px] text-slate-500 mt-1">Platform performance indicator</p>
+                                </div>
+
+                                <!-- Card 3: Échecs ELO & Dames ELO -->
+                                <div class="nova-card rounded-2xl p-4">
+                                    <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
+                                        <span>Échecs & Dames ELO</span>
+                                        <span class="text-novaAmber">🏆</span>
+                                    </div>
+                                    <div class="font-mono text-lg font-bold text-white flex items-center gap-2">
+                                        <span>♔ 399</span>
+                                        <span class="text-slate-600">•</span>
+                                        <span>⛂ 400</span>
+                                    </div>
+                                    <p class="text-[11px] text-slate-500 mt-1">Classements séparés</p>
+                                </div>
+
+                                <!-- Card 4: Interactive Pomodoro Focus Timer -->
+                                <div class="nova-card rounded-2xl p-4 border-novaEmerald/30">
+                                    <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+                                        <span>Pomodoro Focus Timer</span>
+                                        <span class="text-novaEmerald">⏱️</span>
+                                    </div>
+                                    <div class="flex items-center justify-between mt-2">
+                                        <span id="pomodoro-display" class="font-mono text-2xl font-bold text-white">25:00</span>
+                                        <div class="flex items-center gap-1.5">
+                                            <button onclick="togglePomodoro()" id="pomodoro-btn" class="w-8 h-8 rounded-lg bg-novaEmerald text-novaBg flex items-center justify-center font-bold text-xs hover:bg-novaEmeraldBright transition-colors cursor-pointer" title="Start/Pause">
+                                                ▶
+                                            </button>
+                                            <button onclick="resetPomodoro()" class="w-8 h-8 rounded-lg bg-novaBg border border-novaBorder text-slate-400 hover:text-white flex items-center justify-center text-xs transition-colors cursor-pointer" title="Reset">
+                                                ↺
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bottom Row: Recommended Next Lessons & 7-Day XP Activity -->
+                            <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                                <div class="md:col-span-7 nova-card rounded-2xl p-4">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <span class="text-xs font-bold text-white">Recommended Next Lessons</span>
+                                        <span class="text-[11px] font-mono text-novaEmerald">Tout voir</span>
+                                    </div>
+                                    <div class="space-y-2.5 text-xs">
+                                        <div class="p-3 rounded-xl bg-novaBg border border-novaBorder flex items-center justify-between gap-2">
+                                            <div>
+                                                <p class="font-semibold text-slate-200">Physique-Chimie — Dipôle RC & RL (Annales 2BAC)</p>
+                                                <p class="text-[11px] text-slate-500 font-mono mt-0.5">PDF • Électricité • 40 min</p>
+                                            </div>
+                                            <span class="px-2.5 py-1 rounded-lg bg-novaSurface border border-novaBorder text-slate-200 font-semibold text-[11px] shrink-0">Étudier</span>
+                                        </div>
+                                        <div class="p-3 rounded-xl bg-novaBg border border-novaBorder flex items-center justify-between gap-2">
+                                            <div>
+                                                <p class="font-semibold text-slate-200">Mathématiques — Théorème des Valeurs Intermédiaires</p>
+                                                <p class="text-[11px] text-slate-500 font-mono mt-0.5">Quiz & Fiche • Analyse • 35 min</p>
+                                            </div>
+                                            <span class="px-2.5 py-1 rounded-lg bg-novaSurface border border-novaBorder text-slate-200 font-semibold text-[11px] shrink-0">Étudier</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="md:col-span-5 nova-card rounded-2xl p-4 flex flex-col justify-between">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs font-bold text-white">7-Day XP Activity</span>
+                                        <span class="text-[11px] font-mono text-novaEmerald">+420 XP</span>
+                                    </div>
+                                    <!-- Activity Bar Chart matching green bars in screenshot -->
+                                    <div class="grid grid-cols-7 gap-2 items-end h-24 pt-4">
+                                        <div class="flex flex-col items-center gap-1.5">
+                                            <div class="w-full bg-novaEmerald/30 rounded-t-md h-8"></div>
+                                            <span class="text-[9px] font-mono text-slate-500">11-18</span>
+                                        </div>
+                                        <div class="flex flex-col items-center gap-1.5">
+                                            <div class="w-full bg-novaEmerald/50 rounded-t-md h-12"></div>
+                                            <span class="text-[9px] font-mono text-slate-500">11-19</span>
+                                        </div>
+                                        <div class="flex flex-col items-center gap-1.5">
+                                            <div class="w-full bg-novaEmerald rounded-t-md h-16"></div>
+                                            <span class="text-[9px] font-mono text-slate-500">11-20</span>
+                                        </div>
+                                        <div class="flex flex-col items-center gap-1.5">
+                                            <div class="w-full bg-novaEmerald/40 rounded-t-md h-10"></div>
+                                            <span class="text-[9px] font-mono text-slate-500">11-21</span>
+                                        </div>
+                                        <div class="flex flex-col items-center gap-1.5">
+                                            <div class="w-full bg-novaEmerald/80 rounded-t-md h-14"></div>
+                                            <span class="text-[9px] font-mono text-slate-500">11-22</span>
+                                        </div>
+                                        <div class="flex flex-col items-center gap-1.5">
+                                            <div class="w-full bg-novaEmerald rounded-t-md h-20 shadow-[0_0_12px_rgba(16,185,129,0.4)]"></div>
+                                            <span class="text-[9px] font-mono text-white">11-23</span>
+                                        </div>
+                                        <div class="flex flex-col items-center gap-1.5">
+                                            <div class="w-full bg-novaEmerald/60 rounded-t-md h-11"></div>
+                                            <span class="text-[9px] font-mono text-slate-500">11-24</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- VIEW 2: QUIZ & COMPÉTENCES -->
+                        <div id="ws-view-quiz" class="ws-view hidden space-y-5">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-novaBorder">
+                                <div>
+                                    <span class="text-[11px] font-mono text-novaEmerald uppercase">SYSTÈME D'ÉVALUATION INTELLIGENT</span>
+                                    <h3 class="font-display text-xl font-bold text-white">Quiz Bac & Rapport de Compétences</h3>
+                                </div>
+                                <span class="px-3 py-1 rounded-lg bg-novaSurface border border-novaBorder text-xs font-mono text-slate-300">
+                                    Historique Privé & Sécurisé (RLS)
+                                </span>
+                            </div>
+
+                            <div class="nova-card rounded-2xl p-5">
+                                <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-slate-400 mb-3">
+                                    <span>MATIÈRE : PHYSIQUE (2BAC) • DIPÔLE RC</span>
+                                    <span class="text-novaEmerald">TESTEZ LA CORRECTION INSTANTANÉE</span>
+                                </div>
+                                <p class="text-sm sm:text-base text-white font-medium mb-4">
+                                    Lors de la charge d'un condensateur de capacité <span class="font-mono text-novaEmerald">C</span> à travers un conducteur ohmique de résistance <span class="font-mono text-novaEmerald">R</span>, quelle est l'expression de la constante de temps <span class="font-mono text-novaEmerald">τ</span> ?
+                                </p>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
+                                    <button onclick="checkDemoQuiz(0)" id="q-choice-0" class="q-choice text-left px-4 py-3 rounded-xl bg-novaBg border border-novaBorder hover:border-novaEmerald/50 text-sm font-mono text-slate-200 transition-all cursor-pointer">
+                                        A) τ = R / C
+                                    </button>
+                                    <button onclick="checkDemoQuiz(1)" id="q-choice-1" class="q-choice text-left px-4 py-3 rounded-xl bg-novaBg border border-novaBorder hover:border-novaEmerald/50 text-sm font-mono text-slate-200 transition-all cursor-pointer">
+                                        B) τ = R · C
+                                    </button>
+                                    <button onclick="checkDemoQuiz(2)" id="q-choice-2" class="q-choice text-left px-4 py-3 rounded-xl bg-novaBg border border-novaBorder hover:border-novaEmerald/50 text-sm font-mono text-slate-200 transition-all cursor-pointer">
+                                        C) τ = C / R²
+                                    </button>
+                                </div>
+
+                                <!-- Detailed Report Output (Axis, Topic, Competency, Explanation ONLY) -->
+                                <div class="rounded-xl bg-novaBg border border-novaBorder p-4 space-y-3">
+                                    <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+                                        <span id="quiz-feedback-msg" class="text-slate-400">Cliquez sur une réponse pour générer le rapport d'analyse...</span>
+                                        <span id="quiz-score-badge" class="px-2.5 py-0.5 rounded bg-novaSurface text-slate-400">Score: --</span>
+                                    </div>
+                                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2 border-t border-novaBorder/70 text-xs font-mono">
+                                        <div class="p-2.5 rounded-lg bg-novaSurface">
+                                            <span class="text-slate-500 block text-[10px]">AXIS (المحور)</span>
+                                            <span class="text-slate-200 font-semibold">Électricité</span>
+                                        </div>
+                                        <div class="p-2.5 rounded-lg bg-novaSurface">
+                                            <span class="text-slate-500 block text-[10px]">TOPIC (الموضوع)</span>
+                                            <span class="text-slate-200 font-semibold">Dipôle RC</span>
+                                        </div>
+                                        <div class="p-2.5 rounded-lg bg-novaSurface">
+                                            <span class="text-slate-500 block text-[10px]">COMPETENCY (الكفاءة)</span>
+                                            <span id="quiz-comp-status" class="text-novaEmerald font-semibold">Analyse dimensionnelle</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- VIEW 3: AI STUDIO & AI TUTOR (TVI Explanation with Subject Selector) -->
+                        <div id="ws-view-aistudio" class="ws-view hidden space-y-4">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-novaBorder">
+                                <div>
+                                    <span class="text-[11px] font-mono text-novaEmerald uppercase">AI STUDIO // GEMINI ENGINE</span>
+                                    <h3 class="font-display text-xl font-bold text-white">AI Tutor & Générateur d'Examens</h3>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <select onchange="updateAiSubject(this.value)" class="px-3 py-1.5 rounded-lg bg-novaSurface border border-novaBorder text-xs font-mono text-slate-200 focus:outline-none focus:border-novaEmerald cursor-pointer">
+                                        <option value="math">Mathématiques (1BAC/2BAC)</option>
+                                        <option value="pc">Physique-Chimie (2BAC)</option>
+                                        <option value="svt">SVT (2BAC)</option>
+                                    </select>
+                                    <span class="hidden sm:inline-block px-2.5 py-1.5 rounded-lg bg-novaEmerald/15 border border-novaEmerald/30 text-novaEmerald text-xs font-mono">
+                                        Validé Prof
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Chat Bubbles matching Screenshot -->
+                            <div id="ai-chat-container" class="space-y-3 max-h-[340px] overflow-y-auto pr-1">
+                                <!-- User Prompt Pill -->
+                                <div class="flex justify-end">
+                                    <div id="ai-user-prompt" class="px-4 py-2.5 rounded-2xl bg-novaEmerald text-novaBg font-semibold text-xs sm:text-sm max-w-md shadow-md">
+                                        Explique le Théorème des Valeurs Intermédiaires (TVI) avec un exemple.
+                                    </div>
+                                </div>
+
+                                <!-- AI Tutor Response Card -->
+                                <div id="ai-tutor-reply" class="nova-card rounded-2xl p-4 sm:p-5 space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                    <div class="flex items-center gap-2 text-xs font-mono text-novaEmerald pb-2 border-b border-novaBorder">
+                                        <span>✦ AI Tutor — Niveau 1BAC / 2BAC Sciences Mathématiques</span>
+                                    </div>
+                                    <p class="font-bold text-white">1. Qu'est-ce que le TVI ? (Intuition)</p>
+                                    <p>
+                                        Imagine que tu es en montagne. Pour passer d'une altitude de <span class="font-mono text-white">1000m</span> à <span class="font-mono text-white">2000m</span>, si ton chemin est continu, tu passeras forcément par toutes les altitudes intermédiaires (par exemple <span class="font-mono text-novaEmerald">1500m</span>).
+                                    </p>
+                                    <p class="font-bold text-white pt-1">2. Énoncé mathématique rigoureux</p>
+                                    <div class="p-3 rounded-xl bg-novaBg border border-novaBorder font-mono text-xs text-emerald-300">
+                                        Soit f une fonction continue sur [a, b]. Pour tout réel k compris entre f(a) et f(b), il existe au moins un réel c ∈ [a, b] tel que : f(c) = k.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- VIEW 4: ÉCHECS & DAMES ELO -->
+                        <div id="ws-view-arena" class="ws-view hidden space-y-5">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-novaBorder">
+                                <div>
+                                    <span class="text-[11px] font-mono text-novaAmber uppercase">ARÈNE COMPÉTITIVE // TOURNOIS</span>
+                                    <h3 class="font-display text-xl font-bold text-white">Échecs & Dames — Classements ELO Séparés</h3>
+                                </div>
+                                <span class="px-3 py-1 rounded-lg bg-novaAmber/15 border border-novaAmber/30 text-novaAmber text-xs font-mono">
+                                    Saison 1 • Tournois Officiels
+                                </span>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <!-- Chess & Checkers ELO Leaderboard -->
+                                <div class="nova-card rounded-2xl p-4">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <span class="text-sm font-bold text-white flex items-center gap-2">♔ Classements Échecs & Dames</span>
+                                        <span class="text-[11px] font-mono text-novaEmerald">RAPIDE 10+0</span>
+                                    </div>
+                                    <div class="space-y-2 font-mono text-xs">
+                                        <div class="flex items-center justify-between p-2.5 rounded-xl bg-novaBg border border-novaEmerald/30">
+                                            <span class="text-white font-bold">#1 Youssef_SM <span class="text-slate-500 font-normal">(2BAC)</span></span>
+                                            <span class="text-novaAmber font-bold">♔ 1420 • ⛂ 1390</span>
+                                        </div>
+                                        <div class="flex items-center justify-between p-2.5 rounded-xl bg-novaBg border border-novaBorder">
+                                            <span class="text-slate-300">#2 Salma_PC <span class="text-slate-500">(2BAC)</span></span>
+                                            <span class="text-slate-300">♔ 1385 • ⛂ 1340</span>
+                                        </div>
+                                        <div class="flex items-center justify-between p-2.5 rounded-xl bg-novaBg border border-novaBorder">
+                                            <span class="text-slate-300">#3 Mehdi_1BAC</span>
+                                            <span class="text-slate-300">♔ 1310 • ⛂ 1295</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tournament Bracket & Match Preview -->
+                                <div class="nova-card rounded-2xl p-4 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-3">
+                                            <span class="text-sm font-bold text-white flex items-center gap-2">🏆 Tournoi Coupe Nationale Bac</span>
+                                            <span class="text-[11px] font-mono text-novaAmber">BRACKET 16 JOUEURS</span>
+                                        </div>
+                                        <div class="space-y-2 text-xs font-mono mb-3">
+                                            <div class="p-2.5 rounded-xl bg-novaBg border border-novaBorder flex items-center justify-between">
+                                                <span class="text-slate-300">Demi-Finale 1 : Youssef_SM vs Salma_PC</span>
+                                                <span class="text-novaEmerald">♔ Échecs</span>
+                                            </div>
+                                            <div class="p-2.5 rounded-xl bg-novaBg border border-novaBorder flex items-center justify-between">
+                                                <span class="text-slate-300">Demi-Finale 2 : abdo_2bac vs Mehdi_1BAC</span>
+                                                <span class="text-novaAmber">⛂ Dames</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-2.5 rounded-xl bg-novaBg border border-novaBorder flex items-center justify-between text-xs font-mono">
+                                        <span class="text-slate-400">Classements ELO indépendants</span>
+                                        <span class="px-2 py-0.5 rounded bg-novaEmerald/15 text-novaEmerald">25 Déc 2026</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Status Footer inside Mockup -->
+                        <div class="pt-4 mt-4 border-t border-novaBorder/70 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-slate-500">
+                            <span>SRTU Nova Engine • PostgreSQL + RLS Secured</span>
+                            <span class="text-novaEmerald">Aperçu fidèle de la version v1.0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: CORE ECOSYSTEM GRID -->
+        <section id="ecosystem" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+                <div>
+                    <span class="text-xs font-mono uppercase tracking-widest text-novaEmerald block mb-2" data-i18n="ecoEyebrow">
+                        FONCTIONNALITÉS CLÉS
+                    </span>
+                    <h2 class="font-display text-2xl sm:text-4xl font-bold text-white" data-i18n="ecoTitle">
+                        Tout ce dont l'Élève Marocain a Besoin
+                    </h2>
+                </div>
+                <p class="text-sm text-slate-400 max-w-md" data-i18n="ecoSubtitle">
+                    Une plateforme pensée pour la rigueur académique, la confidentialité des résultats et l'entraide entre étudiants.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Module 1: Academy PDF Library -->
+                <div class="nova-card rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="w-11 h-11 rounded-xl bg-novaEmerald/15 border border-novaEmerald/30 flex items-center justify-center text-novaEmerald mb-5">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-white mb-2" data-i18n="mod1Title">
+                            Bibliothèque PDF Structurée
+                        </h3>
+                        <p class="text-sm text-slate-400 leading-relaxed" data-i18n="mod1Desc">
+                            Accédez instantanément aux ressources classées par Niveau, Filière (SM, PC, SVT, Éco) et Matière, déposées et vérifiées par les enseignants.
+                        </p>
+                    </div>
+                    <div class="mt-5 pt-4 border-t border-novaBorder flex items-center justify-between text-xs font-mono text-slate-400">
+                        <span>1BAC & 2BAC</span>
+                        <span class="text-novaEmerald">Accès Direct</span>
+                    </div>
+                </div>
+
+                <!-- Module 2: Smart Quizzes & Competency Analysis -->
+                <div class="nova-card rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="w-11 h-11 rounded-xl bg-novaEmerald/15 border border-novaEmerald/30 flex items-center justify-center text-novaEmerald mb-5">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-white mb-2" data-i18n="mod2Title">
+                            Quiz & Analyse par Compétence
+                        </h3>
+                        <p class="text-sm text-slate-400 leading-relaxed" data-i18n="mod2Desc">
+                            Correction automatique détaillée avec explications. Chaque question identifie vos points forts et lacunes par Axe, Sujet et Compétence.
+                        </p>
+                    </div>
+                    <div class="mt-5 pt-4 border-t border-novaBorder flex items-center justify-between text-xs font-mono text-slate-400">
+                        <span>Axis • Topic • Competency</span>
+                        <span class="text-novaEmerald">100% Privé</span>
+                    </div>
+                </div>
+
+                <!-- Module 3: AI Studio (Teacher-Reviewed) -->
+                <div class="nova-card rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="w-11 h-11 rounded-xl bg-novaCyan/15 border border-novaCyan/30 flex items-center justify-center text-novaCyan mb-5">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-white mb-2" data-i18n="mod3Title">
+                            AI Studio & Tuteur Pédagogique
+                        </h3>
+                        <p class="text-sm text-slate-400 leading-relaxed" data-i18n="mod3Desc">
+                            Génération d'examens ciblés par matière et niveau validés par un professeur avant publication, avec un tuteur IA pour vos questions.
+                        </p>
+                    </div>
+                    <div class="mt-5 pt-4 border-t border-novaBorder flex items-center justify-between text-xs font-mono text-slate-400">
+                        <span>Modération Professeur</span>
+                        <span class="text-novaCyan">Gemini AI</span>
+                    </div>
+                </div>
+
+                <!-- Module 4: Private Messaging & Groups -->
+                <div class="nova-card rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="w-11 h-11 rounded-xl bg-novaEmerald/15 border border-novaEmerald/30 flex items-center justify-center text-novaEmerald mb-5">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-white mb-2" data-i18n="mod4Title">
+                            Messagerie Privée & Groupes
+                        </h3>
+                        <p class="text-sm text-slate-400 leading-relaxed" data-i18n="mod4Desc">
+                            Ajoutez vos camarades par @username, échangez des messages directs avec réponses ciblées, messages épinglés, messages éphémères et groupes modérés.
+                        </p>
+                    </div>
+                    <div class="mt-5 pt-4 border-t border-novaBorder flex items-center justify-between text-xs font-mono text-slate-400">
+                        <span>Chat & DMs • Groupes</span>
+                        <span class="text-novaEmerald">Temps Réel</span>
+                    </div>
+                </div>
+
+                <!-- Module 5: Chess & Checkers Tournaments -->
+                <div class="nova-card rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="w-11 h-11 rounded-xl bg-novaAmber/15 border border-novaAmber/30 flex items-center justify-center text-novaAmber mb-5">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-white mb-2" data-i18n="mod5Title">
+                            Échecs, Dames & Tournois ELO
+                        </h3>
+                        <p class="text-sm text-slate-400 leading-relaxed" data-i18n="mod5Desc">
+                            Stimulez votre logique stratégique avec des parties rapides d'Échecs et de Dames, dotées de classements ELO séparés et de tournois compétitifs.
+                        </p>
+                    </div>
+                    <div class="mt-5 pt-4 border-t border-novaBorder flex items-center justify-between text-xs font-mono text-slate-400">
+                        <span>Chess ELO • Checkers ELO</span>
+                        <span class="text-novaAmber">Compétitif</span>
+                    </div>
+                </div>
+
+                <!-- Module 6: Cognitive Score & Pomodoro -->
+                <div class="nova-card rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="w-11 h-11 rounded-xl bg-novaEmerald/15 border border-novaEmerald/30 flex items-center justify-center text-novaEmerald mb-5">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-white mb-2" data-i18n="mod6Title">
+                            Score Cognitif & Focus Pomodoro
+                        </h3>
+                        <p class="text-sm text-slate-400 leading-relaxed" data-i18n="mod6Desc">
+                            Mesurez votre régularité sur 7 jours, cumulez de l'expérience (XP), suivez votre SRTU Cognitive Score et rythmez vos révisions avec le minuteur Pomodoro intégré.
+                        </p>
+                    </div>
+                    <div class="mt-5 pt-4 border-t border-novaBorder flex items-center justify-between text-xs font-mono text-slate-400">
+                        <span>Historique Personnel</span>
+                        <span class="text-novaEmerald">Sécurisé RLS</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 4: ARCHITECTURE & SYSTEM READINESS -->
+        <section id="roadmap" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+            <div class="nova-card rounded-3xl p-6 sm:p-10 relative overflow-hidden">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-6 border-b border-novaBorder">
+                    <div>
+                        <span class="text-xs font-mono uppercase tracking-widest text-novaEmerald block mb-1" data-i18n="roadEyebrow">
+                            ARCHITECTURE & SÉCURITÉ
+                        </span>
+                        <h2 class="font-display text-xl sm:text-2xl font-bold text-white" data-i18n="roadTitle">
+                            Avancement de la Version v1.0
+                        </h2>
+                    </div>
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-novaEmerald/10 border border-novaEmerald/30 text-novaEmerald text-xs font-mono font-bold">
+                        <span>PROGRESSION GLOBALE : 92%</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4 font-mono text-xs sm:text-sm" dir="ltr">
+                    <!-- Milestone 1 -->
+                    <div class="p-4 rounded-2xl bg-novaBg border border-novaBorder flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-novaEmerald/20 text-novaEmerald flex items-center justify-center font-bold">✓</span>
+                            <span class="text-slate-200 font-semibold">Architecture Base de Données & Sécurité RLS (34/34 Tables)</span>
+                        </div>
+                        <span class="text-novaEmerald font-bold">OPÉRATIONNEL</span>
+                    </div>
+
+                    <!-- Milestone 2 -->
+                    <div class="p-4 rounded-2xl bg-novaBg border border-novaBorder flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-novaEmerald/20 text-novaEmerald flex items-center justify-center font-bold">✓</span>
+                            <span class="text-slate-200 font-semibold">AI Studio & Tuteur Pédagogique (1BAC / 2BAC)</span>
+                        </div>
+                        <span class="text-novaEmerald font-bold">OPÉRATIONNEL</span>
+                    </div>
+
+                    <!-- Milestone 3 -->
+                    <div class="p-4 rounded-2xl bg-novaBg border border-novaBorder flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-novaAmber/20 text-novaAmber flex items-center justify-center font-bold animate-pulse">●</span>
+                            <span class="text-slate-200 font-semibold">Finalisation des Rapports Personnels de Quiz & Compétences</span>
+                        </div>
+                        <span class="text-novaAmber font-bold">EN COURS (90%)</span>
+                    </div>
+
+                    <!-- Milestone 4 -->
+                    <div class="p-4 rounded-2xl bg-novaBg border border-novaBorder flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-novaCyan/20 text-novaCyan flex items-center justify-center font-bold">◈</span>
+                            <span class="text-slate-200 font-semibold">Arène Échecs & Dames ELO + Messagerie Étudiante</span>
+                        </div>
+                        <span class="text-novaCyan font-bold">TESTS FINAUX</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-novaBorder bg-[#090b0e]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-7 h-7 rounded-lg bg-novaEmerald/15 border border-novaEmerald/40 flex items-center justify-center text-novaEmerald font-bold text-xs">
+                    S
+                </div>
+                <span class="font-display font-bold text-white">SRTU <span class="text-novaEmerald">Nova</span></span>
+                <span class="text-slate-600">•</span>
+                <span class="text-xs text-slate-400" data-i18n="footerNote">
+                    Plateforme Éducative Numérique • Lancement le 25 Décembre 2026
+                </span>
+            </div>
+
+            <div class="text-xs font-mono text-slate-500">
+                © 2026 SRTU Nova. Tous droits réservés.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts: Canvas Emerald Mesh Background, Language Switcher, Workspace Tabs, Pomodoro, Quiz & AI Tutor -->
+    <script>
+        // 1. Multilingual Dictionary (FR / AR / EN)
+        const i18nData = {
+            fr: {
+                dir: 'ltr',
+                brandSub: 'Smart Academic Ecosystem • 1BAC & 2BAC',
+                navPreview: 'Aperçu',
+                navFeatures: 'Fonctionnalités',
+                navArchitecture: 'Architecture',
+                statusBadge: '25 DÉCEMBRE 2026',
+                heroEyebrow: '🇲🇦 CONÇU POUR LES LYCÉENS & BACHELIERS MAROCAINS (1BAC / 2BAC)',
+                heroTitleMain: 'Votre Assistant Académique Intelligent',
+                heroTitleAccent: '& Espace Compétitif Tout-en-Un',
+                heroSubtitle: "Bien plus qu'une simple bibliothèque de cours. SRTU Nova analyse vos compétences par axe et chapitre, génère des quiz corrigés par IA, suit votre Score Cognitif et anime vos tournois d'Échecs & Dames.",
+                ctaExplore: "Explorer l'Interface en Direct",
+                ctaArchitecture: 'Découvrir les Fonctionnalités',
+                countdownTitle: 'OUVERTURE OFFICIELLE DANS (30 JOURS)',
+                cdDays: 'JOURS',
+                cdHours: 'HEURES',
+                cdMinutes: 'MINS',
+                cdSeconds: 'SECS',
+                previewEyebrow: 'APERÇU INTERACTIF DU WORKSPACE',
+                previewTitle: "Testez l'Environnement SRTU Nova",
+                previewDesc: "Cliquez sur les onglets de la barre latérale ci-dessous pour explorer le Tableau de bord, le moteur de Quiz & Compétences, l'AI Studio (TVI) et le classement Échecs & Dames ELO.",
+                ecoEyebrow: 'FONCTIONNALITÉS CLÉS',
+                ecoTitle: "Tout ce dont l'Élève Marocain a Besoin",
+                ecoSubtitle: "Une plateforme pensée pour la rigueur académique, la confidentialité des résultats et l'entraide entre étudiants.",
+                mod1Title: 'Bibliothèque PDF Structurée',
+                mod1Desc: 'Accédez instantanément aux ressources classées par Niveau, Filière (SM, PC, SVT, Éco) et Matière, déposées et vérifiées par les enseignants.',
+                mod2Title: 'Quiz & Analyse par Compétence',
+                mod2Desc: 'Correction automatique détaillée avec explications. Chaque question identifie vos points forts et lacunes par Axe, Sujet et Compétence.',
+                mod3Title: 'AI Studio & Tuteur Pédagogique',
+                mod3Desc: "Génération d'examens ciblés par matière et niveau validés par un professeur avant publication, avec un tuteur IA pour vos questions.",
+                mod4Title: 'Messagerie Privée & Groupes',
+                mod4Desc: 'Ajoutez vos camarades par @username, échangez des messages directs avec réponses ciblées, messages épinglés, messages éphémères et groupes modérés.',
+                mod5Title: 'Échecs, Dames & Tournois ELO',
+                mod5Desc: "Stimulez votre logique stratégique avec des parties rapides d'Échecs et de Dames, dotées de classements ELO séparés et de tournois compétitifs.",
+                mod6Title: 'Score Cognitif & Focus Pomodoro',
+                mod6Desc: "Mesurez votre régularité sur 7 jours, cumulez de l'expérience (XP), suivez votre SRTU Cognitive Score et rythmez vos révisions avec le minuteur Pomodoro intégré.",
+                roadEyebrow: 'ARCHITECTURE & SÉCURITÉ',
+                roadTitle: 'Avancement de la Version v1.0',
+                footerNote: 'Plateforme Éducative Numérique • Lancement le 25 Décembre 2026'
+            },
+            ar: {
+                dir: 'rtl',
+                brandSub: 'منظومة تعليمية ذكية • الأولى والثانية بكالوريا',
+                navPreview: 'معاينة المنصة',
+                navFeatures: 'المميزات',
+                navArchitecture: 'البنية التقنية',
+                statusBadge: '25 دجنبر 2026',
+                heroEyebrow: '🇲🇦 منصة مصممة خصيصاً لتلاميذ الثانوي والبكالوريا بالمغرب',
+                heroTitleMain: 'مساعدك الدراسي الرقمي الشامل',
+                heroTitleAccent: 'وفضاء التنافس الذكي في مكان واحد',
+                heroSubtitle: 'أكثر من مجرد مكتبة ملفات. تقوم منصة SRTU Nova بتحليل مستواك حسب المحور والكفاءة، وتوليد اختبارات مصححة بالذكاء الاصطناعي، وتتبع مؤشرك المعرفي مع تنظيم بطولات الشطرنج والداما.',
+                ctaExplore: 'تجربة واجهة المنصة مباشرة',
+                ctaArchitecture: 'اكتشف مميزات المنصة',
+                countdownTitle: 'العد التنازلي للافتتاح الرسمي (30 يوم)',
+                cdDays: 'يوم',
+                cdHours: 'ساعات',
+                cdMinutes: 'دقائق',
+                cdSeconds: 'ثواني',
+                previewEyebrow: 'معاينة تفاعلية حية',
+                previewTitle: 'استكشف بيئة العمل داخل SRTU Nova',
+                previewDesc: 'اضغط على الأقسام في القائمة الجانبية أسفله لتجربة لوحة التحكم، نظام الاختبارات وتحليل الكفاءات، المساعد الذكي AI Studio، وتصنيف الشطرنج والداما.',
+                ecoEyebrow: 'المميزات الأساسية للمنصة',
+                ecoTitle: 'كل ما يحتاجه التلميذ المغربي للتفوق',
+                ecoSubtitle: 'منصة مبنية بدقة لتتبع النتائج الدراسية بخصوصية تامة وتعزيز التعلم التفاعلي.',
+                mod1Title: 'مكتبة PDF منظمة حسب الشعبة',
+                mod1Desc: 'تصفح الموارد الدراسية المرتبة حسب المستوى، الشعبة (علوم رياضية، فيزيائية، SVT...) والمادة، بإشراف الأساتذة.',
+                mod2Title: 'الاختبارات الذكية وتحليل الكفاءات',
+                mod2Desc: 'تصحيح تلقائي مفصل مع تفسير كل جواب، وتحديد دقيق لنقاط القوة والثغرات حسب المحور والموضوع والكفاءة.',
+                mod3Title: 'AI Studio والموجه الدراسي الذكي',
+                mod3Desc: 'توليد اختبارات مخصصة حسب المادة والمستوى مع مراجعة الأساتذة قبل النشر، ومساعد ذكي يشرح النظريات خطوة بخطوة.',
+                mod4Title: 'نظام المراسلة الخاصة والمجموعات',
+                mod4Desc: 'تواصل مع زملائك عبر اسم المستخدم، مع إمكانية الرد على رسائل محددة، تثبيت الرسائل المهمة، الرسائل المؤقتة وإدارة المجموعات.',
+                mod5Title: 'ساحة الشطرنج والداما (ELO)',
+                mod5Desc: 'طور تركيزك الاستراتيجي في مباريات الشطرنج والداما بتصنيف ELO مستقل لكل لعبة وبطولات منظمة.',
+                mod6Title: 'المؤشر المعرفي ومؤقت Pomodoro',
+                mod6Desc: 'تابع نشاطك الأسبوعي، اجمع نقاط الخبرة XP، راقب مؤشر SRTU Cognitive Score ونظم وقت مراجعتك بمؤقت Pomodoro المدمج.',
+                roadEyebrow: 'البنية التقنية والأمان',
+                roadTitle: 'حالة جاهزية النسخة الأولى v1.0',
+                footerNote: 'منصة تعليمية رقمية ذكية • الافتتاح يوم 25 دجنبر 2026'
+            },
+            en: {
+                dir: 'ltr',
+                brandSub: 'Smart Academic Ecosystem • 1BAC & 2BAC',
+                navPreview: 'Preview',
+                navFeatures: 'Features',
+                navArchitecture: 'Architecture',
+                statusBadge: 'DECEMBER 25, 2026',
+                heroEyebrow: '🇲🇦 BUILT FOR MOROCCAN HIGH SCHOOL & BAC STUDENTS (1BAC / 2BAC)',
+                heroTitleMain: 'Your Intelligent Academic Assistant',
+                heroTitleAccent: '& All-in-One Competitive Arena',
+                heroSubtitle: 'Far more than a static PDF repository. SRTU Nova diagnoses your mastery by Axis and Competency, crafts AI-powered exams, tracks your Cognitive Score, and hosts ELO Chess & Checkers tournaments.',
+                ctaExplore: 'Explore Live Interface',
+                ctaArchitecture: 'Discover Features',
+                countdownTitle: 'OFFICIAL LAUNCH IN (30 DAYS)',
+                cdDays: 'DAYS',
+                cdHours: 'HOURS',
+                cdMinutes: 'MINS',
+                cdSeconds: 'SECS',
+                previewEyebrow: 'INTERACTIVE WORKSPACE PREVIEW',
+                previewTitle: 'Experience the SRTU Nova Environment',
+                previewDesc: 'Click the sidebar tabs below to test the Dashboard, Smart Quiz & Competency Diagnostics, AI Studio (TVI), and Chess & Checkers ELO leaderboards.',
+                ecoEyebrow: 'CORE FEATURES',
+                ecoTitle: 'Everything a Moroccan Student Needs',
+                ecoSubtitle: 'Engineered for academic precision, strict result privacy, and peer collaboration.',
+                mod1Title: 'Structured PDF Library',
+                mod1Desc: 'Instantly access resources organized by Grade Level, Track (SM, PC, SVT, Eco), and Subject, curated and verified by teachers.',
+                mod2Title: 'Smart Quiz & Competency Analysis',
+                mod2Desc: 'Automated detailed grading with explanations. Every question maps your strengths and gaps across Axis, Topic, and Competency.',
+                mod3Title: 'AI Studio & Academic Tutor',
+                mod3Desc: 'Generate targeted exams by subject and difficulty reviewed by teachers before publishing, plus an AI Tutor for step-by-step explanations.',
+                mod4Title: 'Private Messaging & Groups',
+                mod4Desc: 'Connect with peers via @username, exchange direct messages with targeted replies, pinned notes, disappearing messages, and moderated groups.',
+                mod5Title: 'Chess, Checkers & ELO Tournaments',
+                mod5Desc: 'Sharpen your strategic thinking between study blocks with fast Chess and Checkers matches featuring separate ELO ratings and brackets.',
+                mod6Title: 'Cognitive Score & Pomodoro Focus',
+                mod6Desc: 'Track 7-day consistency, earn XP, monitor your SRTU Cognitive Score, and pace your study sessions with the built-in Pomodoro timer.',
+                roadEyebrow: 'ARCHITECTURE & SECURITY',
+                roadTitle: 'Version 1.0 Readiness Status',
+                footerNote: 'Digital Educational Platform • Launching December 25, 2026'
+            }
+        };
+
+        function setLanguage(lang) {
+            const data = i18nData[lang];
+            if (!data) return;
+
+            document.documentElement.dir = data.dir;
+            document.documentElement.lang = lang;
+
+            // Update switcher button styles
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('bg-novaEmerald', 'text-novaBg');
+                btn.classList.add('text-slate-400');
+            });
+            const activeBtn = document.getElementById(`btn-lang-${lang}`);
+            activeBtn.classList.remove('text-slate-400');
+            activeBtn.classList.add('bg-novaEmerald', 'text-novaBg');
+
+            // Update all translated strings
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (data[key]) el.textContent = data[key];
+            });
+        }
+
+        // 2. Interactive Workspace Tab Switcher
+        function switchWorkspaceTab(tabName) {
+            // Update Sidebar Active Pill
+            document.querySelectorAll('.ws-tab-btn').forEach(btn => {
+                btn.classList.remove('sidebar-pill-active');
+                btn.classList.add('text-slate-400');
+            });
+            const activeTabBtn = document.getElementById(`tab-btn-${tabName}`);
+            activeTabBtn.classList.remove('text-slate-400');
+            activeTabBtn.classList.add('sidebar-pill-active');
+
+            // Switch Content Views
+            document.querySelectorAll('.ws-view').forEach(view => view.classList.add('hidden'));
+            document.getElementById(`ws-view-${tabName}`).classList.remove('hidden');
+
+            // Update Mock Browser URL
+            const urlMap = {
+                dashboard: 'srtunova.ma/dashboard',
+                quiz: 'srtunova.ma/academy/quiz-diagnostics',
+                aistudio: 'srtunova.ma/ai-studio',
+                arena: 'srtunova.ma/arena/elo-rankings'
+            };
+            document.getElementById('mock-url').textContent = urlMap[tabName] || 'srtunova.ma';
+        }
+
+        // 3. Interactive Mini Pomodoro Timer inside Dashboard Preview
+        let pomoSeconds = 25 * 60;
+        let pomoInterval = null;
+
+        function updatePomoDisplay() {
+            const mins = Math.floor(pomoSeconds / 60);
+            const secs = pomoSeconds % 60;
+            document.getElementById('pomodoro-display').textContent =
+                `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        function togglePomodoro() {
+            const btn = document.getElementById('pomodoro-btn');
+            if (pomoInterval) {
+                clearInterval(pomoInterval);
+                pomoInterval = null;
+                btn.textContent = '▶';
+            } else {
+                btn.textContent = '❚❚';
+                pomoInterval = setInterval(() => {
+                    if (pomoSeconds > 0) {
+                        pomoSeconds--;
+                        updatePomoDisplay();
+                    } else {
+                        clearInterval(pomoInterval);
+                        pomoInterval = null;
+                        btn.textContent = '▶';
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetPomodoro() {
+            clearInterval(pomoInterval);
+            pomoInterval = null;
+            pomoSeconds = 25 * 60;
+            document.getElementById('pomodoro-btn').textContent = '▶';
+            updatePomoDisplay();
+        }
+
+        // 4. Interactive Quiz & Competency Diagnostics Demo
+        function checkDemoQuiz(selectedIdx) {
+            const correctIdx = 1; // B) τ = R · C
+            const choices = document.querySelectorAll('.q-choice');
+
+            choices.forEach((btn, i) => {
+                btn.classList.remove('border-novaEmerald', 'bg-novaEmerald/15', 'border-rose-500', 'bg-rose-500/15', 'text-white');
+                if (i === correctIdx) {
+                    btn.classList.add('border-novaEmerald', 'bg-novaEmerald/15', 'text-white');
+                } else if (i === selectedIdx && selectedIdx !== correctIdx) {
+                    btn.classList.add('border-rose-500', 'bg-rose-500/15', 'text-white');
+                }
+            });
+
+            const msgEl = document.getElementById('quiz-feedback-msg');
+            const badgeEl = document.getElementById('quiz-score-badge');
+            const compEl = document.getElementById('quiz-comp-status');
+
+            if (selectedIdx === correctIdx) {
+                msgEl.innerHTML = `<span class="text-novaEmerald font-bold">✓ Exact !</span> [R]·[C] = (U/I)·(Q/U) = Q/I = [T] (homogène à un temps).`;
+                badgeEl.textContent = 'Score: 100% (Maîtrisé)';
+                badgeEl.className = 'px-2.5 py-0.5 rounded bg-novaEmerald/20 text-novaEmerald font-bold';
+                compEl.textContent = 'Acquis (100%)';
+                compEl.className = 'text-novaEmerald font-semibold';
+            } else {
+                msgEl.innerHTML = `<span class="text-rose-400 font-bold">✕ Erreur :</span> La réponse correcte est B) τ = R·C (en secondes).`;
+                badgeEl.textContent = 'Score: 0% (Lacune détectée)';
+                badgeEl.className = 'px-2.5 py-0.5 rounded bg-rose-500/20 text-rose-400 font-bold';
+                compEl.textContent = 'À consolider';
+                compEl.className = 'text-rose-400 font-semibold';
+            }
+        }
+
+        // 5. Interactive AI Studio Subject Switcher
+        function updateAiSubject(subject) {
+            const promptEl = document.getElementById('ai-user-prompt');
+            const replyEl = document.getElementById('ai-tutor-reply');
+
+            if (subject === 'math') {
+                promptEl.textContent = 'Explique le Théorème des Valeurs Intermédiaires (TVI) avec un exemple.';
+                replyEl.innerHTML = `
+                    <div class="flex items-center gap-2 text-xs font-mono text-novaEmerald pb-2 border-b border-novaBorder">
+                        <span>✦ AI Tutor — Niveau 1BAC / 2BAC Sciences Mathématiques</span>
+                    </div>
+                    <p class="font-bold text-white">1. Qu'est-ce que le TVI ? (Intuition)</p>
+                    <p>
+                        Imagine que tu es en montagne. Pour passer d'une altitude de <span class="font-mono text-white">1000m</span> à <span class="font-mono text-white">2000m</span>, si ton chemin est continu, tu passeras forcément par toutes les altitudes intermédiaires (par exemple <span class="font-mono text-novaEmerald">1500m</span>).
+                    </p>
+                    <p class="font-bold text-white pt-1">2. Énoncé mathématique rigoureux</p>
+                    <div class="p-3 rounded-xl bg-novaBg border border-novaBorder font-mono text-xs text-emerald-300">
+                        Soit f une fonction continue sur [a, b]. Pour tout réel k compris entre f(a) et f(b), il existe au moins un réel c ∈ [a, b] tel que : f(c) = k.
+                    </div>
+                `;
+            } else if (subject === 'pc') {
+                promptEl.textContent = 'Comment déterminer graphiquement la constante de temps τ d’un dipôle RC ?';
+                replyEl.innerHTML = `
+                    <div class="flex items-center gap-2 text-xs font-mono text-novaEmerald pb-2 border-b border-novaBorder">
+                        <span>✦ AI Tutor — Niveau 2BAC Sciences Physiques</span>
+                    </div>
+                    <p class="font-bold text-white">1. Méthode de la tangente à t = 0</p>
+                    <p>
+                        L'intersection de la tangente à la courbe <span class="font-mono text-white">u_C(t)</span> à l'origine <span class="font-mono text-white">t = 0</span> avec l'asymptote horizontale <span class="font-mono text-novaEmerald">u_C = E</span> donne directement l'abscisse <span class="font-mono text-novaEmerald">t = τ</span>.
+                    </p>
+                    <p class="font-bold text-white pt-1">2. Méthode des 63% en charge</p>
+                    <div class="p-3 rounded-xl bg-novaBg border border-novaBorder font-mono text-xs text-emerald-300">
+                        À t = τ, u_C(τ) = E · (1 - e⁻¹) ≈ 0,63 · E. Il suffit de lire l'abscisse correspondant à 0,63·E.
+                    </div>
+                `;
+            } else {
+                promptEl.textContent = 'Résume le rôle de l’ATP dans la contraction musculaire (2BAC SVT).';
+                replyEl.innerHTML = `
+                    <div class="flex items-center gap-2 text-xs font-mono text-novaEmerald pb-2 border-b border-novaBorder">
+                        <span>✦ AI Tutor — Niveau 2BAC SVT</span>
+                    </div>
+                    <p class="font-bold text-white">1. Fixation et Hydrolyse de l'ATP</p>
+                    <p>
+                        En présence d'ions <span class="font-mono text-novaEmerald">Ca²⁺</span>, les têtes de myosine se lient à l'actine (complexe actomyosine). L'hydrolyse de l'ATP fournit l'énergie mécanique pour le pivotement des têtes de myosine.
+                    </p>
+                    <p class="font-bold text-white pt-1">2. Détachement et relâchement</p>
+                    <div class="p-3 rounded-xl bg-novaBg border border-novaBorder font-mono text-xs text-emerald-300">
+                        La fixation d'une nouvelle molécule d'ATP sur la myosine provoque sa dissociation de l'actine, permettant le retour au repos si le Ca²⁺ est recapturé.
+                    </div>
+                `;
+            }
+        }
+
+        // 6. 30-Day Launch Countdown Timer (Nov 25, 2026 -> Dec 25, 2026)
+        const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
+        const launchTarget = new Date().getTime() + thirtyDaysMs;
+
+        function tickCountdown() {
+            const now = new Date().getTime();
+            const diff = launchTarget - now;
+            if (diff <= 0) return;
+
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('cd-days').textContent = String(d).padStart(2, '0');
+            document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+            document.getElementById('cd-minutes').textContent = String(m).padStart(2, '0');
+            document.getElementById('cd-seconds').textContent = String(s).padStart(2, '0');
+        }
+        setInterval(tickCountdown, 1000);
+        tickCountdown();
+
+        // 7. Interactive Dark Geometric Grid & Emerald Particle Canvas Background
+        const bgCanvas = document.getElementById('nova-bg-canvas');
+        const ctx = bgCanvas.getContext('2d');
+        let nodes = [];
+        let pointer = { x: -1000, y: -1000 };
+
+        window.addEventListener('mousemove', e => {
+            pointer.x = e.clientX;
+            pointer.y = e.clientY;
+        });
+
+        function setupCanvas() {
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
+            nodes = [];
+            const density = Math.min(Math.floor((bgCanvas.width * bgCanvas.height) / 18000), 75);
+            for (let i = 0; i < density; i++) {
+                nodes.push({
+                    x: Math.random() * bgCanvas.width,
+                    y: Math.random() * bgCanvas.height,
+                    vx: (Math.random() - 0.5) * 0.35,
+                    vy: (Math.random() - 0.5) * 0.35,
+                    r: Math.random() * 1.8 + 0.7,
+                    isEmerald: Math.random() > 0.25
+                });
+            }
+        }
+
+        function drawGridOverlay() {
+            const step = 64;
+            ctx.strokeStyle = 'rgba(36, 42, 50, 0.28)';
+            ctx.lineWidth = 1;
+
+            for (let x = 0; x < bgCanvas.width; x += step) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, bgCanvas.height);
+                ctx.stroke();
+            }
+            for (let y = 0; y < bgCanvas.height; y += step) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(bgCanvas.width, y);
+                ctx.stroke();
+            }
+
+            // Soft pointer spotlight in emerald
+            if (pointer.x > 0 && pointer.y > 0) {
+                const grad = ctx.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, 260);
+                grad.addColorStop(0, 'rgba(16, 185, 129, 0.08)');
+                grad.addColorStop(1, 'rgba(16, 185, 129, 0)');
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+            }
+        }
+
+        function renderBackground() {
+            ctx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+            drawGridOverlay();
+
+            for (let i = 0; i < nodes.length; i++) {
+                const n = nodes[i];
+                n.x += n.vx;
+                n.y += n.vy;
+
+                if (n.x < 0 || n.x > bgCanvas.width) n.vx *= -1;
+                if (n.y < 0 || n.y > bgCanvas.height) n.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+                ctx.fillStyle = n.isEmerald ? 'rgba(16, 185, 129, 0.55)' : 'rgba(148, 163, 184, 0.35)';
+                ctx.fill();
+
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const m = nodes[j];
+                    const dx = n.x - m.x;
+                    const dy = n.y - m.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 135) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(16, 185, 129, ${0.15 * (1 - dist / 135)})`;
+                        ctx.lineWidth = 0.75;
+                        ctx.moveTo(n.x, n.y);
+                        ctx.lineTo(m.x, m.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(renderBackground);
+        }
+
+        window.addEventListener('resize', setupCanvas);
+        window.onload = function () {
+            setupCanvas();
+            renderBackground();
+        };
+    </script>
+</body>
+</html>
